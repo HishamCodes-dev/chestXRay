@@ -1,0 +1,357 @@
+:root {
+  --ink: #18343b;
+  --muted: #668087;
+  --line: #dbe6e4;
+  --paper: #f5f8f5;
+  --mint: #d9f1e6;
+  --coral: #e86f51;
+  --deep: #1d5960;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 85% 5%, #d8efe4 0, transparent 30%),
+    linear-gradient(135deg, #f8faf5 0%, #eaf4f0 100%);
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+  min-height: 100vh;
+}
+.shell {
+  width: min(1120px, calc(100% - 48px));
+  margin: auto;
+  padding: 30px 0 34px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: white;
+  background: var(--coral);
+  border-radius: 50%;
+  font-size: 25px;
+  line-height: 1;
+}
+.research-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #54b583;
+  box-shadow: 0 0 0 4px #d7eee2;
+}
+.intro {
+  max-width: 610px;
+  padding: 92px 0 52px;
+}
+.eyebrow,
+.result-kicker {
+  color: var(--coral);
+  font:
+    600 11px "Space Grotesk",
+    sans-serif;
+  letter-spacing: 2px;
+}
+h1 {
+  margin: 16px 0 18px;
+  font-size: clamp(52px, 7vw, 86px);
+  line-height: 0.98;
+  letter-spacing: -2px;
+  font-weight: 700;
+}
+h1 em {
+  color: var(--deep);
+  font-style: normal;
+}
+.lede {
+  max-width: 430px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.8;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.upload-panel,
+.result-panel {
+  min-height: 440px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(219, 230, 228, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 18px 50px rgba(38, 77, 76, 0.06);
+}
+.panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.panel-heading span {
+  color: var(--coral);
+  font:
+    600 13px "Space Grotesk",
+    sans-serif;
+}
+h2 {
+  margin: 0;
+  font-size: 19px;
+}
+.drop-zone {
+  display: flex;
+  min-height: 278px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 22px;
+  text-align: center;
+  border: 1.5px dashed #b6cfca;
+  background: #f8fcf9;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.drop-zone:hover,
+.drop-zone.dragging,
+.drop-zone.selected {
+  border-color: var(--coral);
+  background: #fffaf7;
+}
+.drop-zone input {
+  display: none;
+}
+.upload-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 8px;
+  color: var(--coral);
+  background: #ffe8df;
+  border-radius: 50%;
+  font: 30px "Space Grotesk";
+}
+.drop-zone strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+.drop-zone small {
+  color: var(--muted);
+  font-size: 12px;
+}
+#preview {
+  display: none;
+  max-height: 130px;
+  max-width: 90%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+#preview.visible {
+  display: block;
+}
+.primary-button {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 16px;
+  padding: 15px 18px;
+  border: 0;
+  border-radius: 4px;
+  color: white;
+  background: var(--deep);
+  font: 600 15px "IBM Plex Sans Arabic";
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.primary-button:hover {
+  background: var(--coral);
+  transform: translateY(-2px);
+}
+.empty-state {
+  display: grid;
+  place-items: center;
+  min-height: 340px;
+  color: #a1b5b3;
+  text-align: center;
+}
+.crosshair {
+  color: #9cc5bb;
+  font: 80px "Space Grotesk";
+  line-height: 1;
+}
+.empty-state p {
+  margin: -36px 0 0;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.empty-state small {
+  font-size: 12px;
+}
+.result-card {
+  margin-top: 12px;
+  padding: 24px;
+  background: #edf8f1;
+  border-right: 4px solid #52a579;
+  border-radius: 5px;
+}
+.result-card.warning {
+  background: #fff1e9;
+  border-color: var(--coral);
+}
+.result-card.uncertain {
+  background: #fff8dc;
+  border-color: #d6a82e;
+}
+.result-top,
+.split-values {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.result-badge {
+  padding: 5px 10px;
+  color: var(--deep);
+  background: #d8eee2;
+  border-radius: 2px;
+  font: 600 12px "Space Grotesk";
+}
+.warning .result-badge {
+  color: #a84a33;
+  background: #ffd9ca;
+}
+.uncertain .result-badge {
+  color: #8a6d12;
+  background: #f8eab0;
+}
+.result-card h3 {
+  margin: 28px 0 0;
+  color: var(--deep);
+  font: 700 66px "Space Grotesk";
+  letter-spacing: -3px;
+}
+.result-card h3 small {
+  font-size: 28px;
+  letter-spacing: 0;
+}
+.result-label {
+  margin: -2px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.meter {
+  height: 9px;
+  overflow: hidden;
+  background: rgba(24, 52, 59, 0.1);
+  border-radius: 20px;
+  direction: ltr;
+}
+.meter span {
+  display: block;
+  height: 100%;
+  background: var(--deep);
+  border-radius: inherit;
+}
+.warning .meter span {
+  background: var(--coral);
+}
+.uncertain .meter span {
+  background: #d6a82e;
+}
+.split-values {
+  margin-top: 10px;
+  color: var(--muted);
+  font: 12px "Space Grotesk";
+  direction: ltr;
+}
+.split-values b {
+  color: var(--ink);
+}
+.result-detail {
+  margin: 28px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(24, 52, 59, 0.12);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.error-message {
+  color: #a84a33;
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+footer {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  padding-top: 28px;
+  color: var(--muted);
+  font-size: 12px;
+}
+footer span {
+  flex: 0 0 auto;
+  color: var(--coral);
+  font-weight: 700;
+}
+footer p {
+  margin: 0;
+}
+@media (max-width: 720px) {
+  .shell {
+    width: min(100% - 28px, 560px);
+    padding-top: 20px;
+  }
+  .intro {
+    padding: 62px 0 34px;
+  }
+  h1 {
+    font-size: 54px;
+  }
+  .lede {
+    font-size: 16px;
+  }
+  .workspace {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .upload-panel,
+  .result-panel {
+    min-height: auto;
+    padding: 20px;
+  }
+  .result-panel {
+    min-height: 370px;
+  }
+  footer {
+    display: block;
+    line-height: 1.7;
+  }
+  footer span {
+    display: block;
+    margin-bottom: 4px;
+  }
+}

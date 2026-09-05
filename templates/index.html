@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>نَفَس | تحليل صورة أشعة الصدر</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="topbar">
+        <a class="brand" href="/" aria-label="الصفحة الرئيسية"
+          ><span class="brand-mark">+</span><span>نَفَس</span></a
+        >
+        <span class="research-pill"
+          ><span class="status-dot"></span> نموذج بحثي محلي</span
+        >
+      </nav>
+
+      <section class="intro">
+        <p class="eyebrow">CHEST X-RAY / AI ASSISTANT</p>
+        <h1>صورة أوضح.<br /><em>قرار أهدأ.</em></h1>
+        <p class="lede">
+          ارفع صورة أشعة الصدر ودع النموذج يقرأ الأنماط الأولية خلال ثوانٍ.
+        </p>
+      </section>
+
+      <section class="workspace">
+        <div class="upload-panel">
+          <div class="panel-heading">
+            <span>01</span>
+            <h2>أضف صورة الأشعة</h2>
+          </div>
+          <form method="post" enctype="multipart/form-data" id="upload-form">
+            <label class="drop-zone" for="xray-input" id="drop-zone">
+              <input
+                type="file"
+                id="xray-input"
+                name="xray"
+                accept="image/png,image/jpeg,image/webp"
+                required
+              />
+              <span class="upload-icon">↑</span>
+              <strong id="file-label">اسحب الصورة هنا أو اضغط للاختيار</strong>
+              <small>PNG / JPG / JPEG / WEBP &nbsp;·&nbsp; حتى 10 MB</small>
+              <img id="preview" alt="معاينة صورة الأشعة" />
+            </label>
+            {% if error %}
+            <p class="error-message">{{ error }}</p>
+            {% endif %}
+            <button class="primary-button" type="submit">
+              <span>تحليل الصورة</span><span>↗</span>
+            </button>
+          </form>
+        </div>
+
+        <div class="result-panel {% if result %}has-result{% endif %}">
+          <div class="panel-heading">
+            <span>02</span>
+            <h2>القراءة الأولية</h2>
+          </div>
+          {% if result %}
+          <div class="result-card {{ result.tone }}">
+            <div class="result-top">
+              <span class="result-kicker">MODEL OUTPUT</span
+              ><span class="result-badge">{{ result.label }}</span>
+            </div>
+            <h3>{{ result.probability }}<small>%</small></h3>
+            <p class="result-label">احتمالية الالتهاب الرئوي</p>
+            <div class="meter">
+              <span style="width: {{ result.probability }}%"></span>
+            </div>
+            <div class="split-values">
+              <span>Normal <b>{{ result.normal_probability }}%</b></span
+              ><span>Pneumonia <b>{{ result.probability }}%</b></span>
+            </div>
+            <p class="result-detail">{{ result.detail }}</p>
+          </div>
+          {% else %}
+          <div class="empty-state">
+            <span class="crosshair">◎</span>
+            <p>النتيجة ستظهر هنا<br /><small>بعد رفع صورة صالحة</small></p>
+          </div>
+          {% endif %}
+        </div>
+      </section>
+
+      <footer>
+        <span>تنبيه مهم</span>
+        <p>
+          هذه الأداة نموذج بحثي للمساعدة فقط وليست تشخيصًا طبيًا. لا تعتمد على
+          النتيجة بدلًا من استشارة طبيب أو اختصاصي أشعة.
+        </p>
+      </footer>
+    </main>
+    <script>
+      const input = document.getElementById("xray-input");
+      const zone = document.getElementById("drop-zone");
+      const preview = document.getElementById("preview");
+      const label = document.getElementById("file-label");
+      input.addEventListener("change", () => {
+        const file = input.files[0];
+        if (!file) return;
+        label.textContent = file.name;
+        preview.src = URL.createObjectURL(file);
+        preview.classList.add("visible");
+        zone.classList.add("selected");
+      });
+      ["dragenter", "dragover"].forEach((eventName) =>
+        zone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          zone.classList.add("dragging");
+        }),
+      );
+      ["dragleave", "drop"].forEach((eventName) =>
+        zone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          zone.classList.remove("dragging");
+        }),
+      );
+      zone.addEventListener("drop", (event) => {
+        input.files = event.dataTransfer.files;
+        input.dispatchEvent(new Event("change"));
+      });
+    </script>
+  </body>
+</html>

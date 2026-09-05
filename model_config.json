@@ -1,0 +1,4 @@
+{
+  "model_path": "improved_chest_xray_model.keras",
+  "threshold": 0.5299999999999998
+}
